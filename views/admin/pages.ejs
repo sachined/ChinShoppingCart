@@ -1,0 +1,55 @@
+<!-- This will set up the page for sorting Pages
+  Sorting algorithm for pages
+-->
+
+<%- include('../_layouts/adminheader'); %>
+
+<h2 class="page-title">Pages</h2>
+<a href="/admin/pages/add-page" class="btn btn-primary">Add a new page</a>
+<br><br>
+
+<!-- Shows the table of pages in admin mode -->
+<table class="table table-striped sorting">
+
+  <thead>
+      <tr class="home">
+          <th>Title</th>
+          <th>Edit</th>
+          <th>Delete</th>
+      </tr>
+  </thead>
+  <tbody>
+      <% pages.forEach((page) =>  {%>
+        <tr id="id_<%= page._id %>" class="<%= page.slug %>">
+          <td><%= page.title %></td>
+          <td><a href="/admin/pages/edit-page/<%= page.slug %>">Edit</a></td>
+          <% if(page.slug == "home") { %>
+          <td></td>
+          <%  }   else  { %>
+          <td><a href="/admin/pages/delete-page/<%= page._id %>">Delete</a></td>
+          <% } %>
+        </tr>
+        <% });  %>
+  </tbody>
+</table>
+
+<!-- This is placed here to enable sorting of pages -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script>
+
+  $('tbody').sortable({
+
+    items: "tr:not('.home')",
+    placeholder: "ui-state-hightlight",
+    update: function () {
+        var ids = $('tbody').sortable("serialize");
+        var url = "/admin/pages/reorder-pages"
+        // Following will post the order of pages (shown in )
+        $.post(url, ids);
+    }
+  });
+
+</script>
+
+<%- include('../_layouts/adminfooter'); %>
