@@ -85,7 +85,7 @@ router.get('/edit-category/:id', (req, res) => {
 
 /*
 * POST edit page
-*/
+
 router.post('/edit-page/:slug', (req, res) => {
 
   req.checkBody('title', 'Title must have a value.').notEmpty();
@@ -152,6 +152,7 @@ router.get('/delete-page/:id', (req, res) =>  {
     res.redirect('/admin/pages/');
   });
 });
+*/
 
 // Exports
 module.exports = router;
