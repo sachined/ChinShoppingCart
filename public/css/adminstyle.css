@@ -1,7 +1,9 @@
+/* This will turn the cursor into a pointer when sorting tabs in admin */
 .sorting tr:not(.home)  {
   cursor: pointer;
 }
 
+/* Condense the page name and the edit/delete options when sorting a tab */
 .ui-state-hightlight  {
   border: 1px dashed #ccc;
 }

@@ -1,5 +1,11 @@
 var mongoose = require('mongoose');
+/*
+* This Schema create a Page (view page for a store)
 
+* Ex: About Us (about-us) -> This page describes the store and its owners/employees
+*     Services (services) -> Describe the services that this store/business offers
+*     Contact Us (contact-us) -> How people can contanct you about any issues or products
+*/
 // Page Schema
 var PageSchema = mongoose.Schema({
 

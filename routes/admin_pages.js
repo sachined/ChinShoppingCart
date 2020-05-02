@@ -1,3 +1,11 @@
+/*  This file is for admin section, so it should only be visible to
+*   admins, not customers, regarding page management.
+*
+*  NOTE:
+*  req.flash isn't working properly (a bug that will take awhile to figure out)
+*  Everything is working even if it doesn't seem like it
+*  Sachin 5/2/20
+*/
 var express = require('express');
 var router = express.Router();
 
@@ -57,6 +65,7 @@ router.post('/add-page', (req, res) => {
   } else {
     Page.findOne({ slug: slug}, (err, page) => {
         if (page) {
+          // This statement doesn't work or is not showing up when I tried to put an existing slug
           req.flash('danger', 'Page slug exists, choose another.');
           res.render('admin/add_page', {
             title: title,
@@ -73,7 +82,7 @@ router.post('/add-page', (req, res) => {
 
             page.save((err) =>  {
               if (err)  return console.log(err);
-
+              // This doesn't work when page is added...but the page is added...
               req.flash('success', 'Page added!');
               res.redirect('/admin/pages');
             });
@@ -126,6 +135,77 @@ router.get('/edit-page/:slug', (req, res) => {
             id: page._id
         });
     });
+});
+
+/*
+* POST edit page
+*/
+router.post('/edit-page/:slug', (req, res) => {
+
+  req.checkBody('title', 'Title must have a value.').notEmpty();
+  req.checkBody('content', 'Content must have a value.').notEmpty();
+
+  var title = req.body.title;
+  var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
+  if(slug == "")  slug = title.replace(/\s+/g, '-').toLowerCase();
+  var content = req.body.content;
+  var id = req.body.id;
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    console.log('errors');
+    res.render('admin/edit_page', {
+      errors: errors,
+      title: title,
+      slug: slug,
+      content: content,
+      id: id
+    });
+
+  } else {
+      Page.findOne({ slug: slug, _id: {'$ne': id}}, (err, page) => {
+          if (page) {
+              // For some reason, this message does not appear
+              // Included connect-flash-plus, but nothing... (5/2/20)
+              // Removed connect-flash-plus, but kept on in case
+              req.flash('danger', 'Page slug exists, choose another.');
+              res.render('admin/edit_page', {
+                  title: title,
+                  slug: slug,
+                  content: content,
+                  id: id
+              });
+          } else {
+              Page.findById(id, (err, page) =>  {
+                  if (err)  return console.log(err);
+
+                  page.title = title;
+                  page.slug = slug;
+                  page.content = content;
+
+                page.save((err) =>  {
+                    if (err)  return console.log(err);
+                    // For some reason, this message does not appear
+                    req.flash('success', 'Page added!');
+                    res.redirect('/admin/pages/edit-page/'+page.slug);
+                });
+              });
+            }
+        });
+    }
+});
+
+/*
+* GET delete page
+*/
+router.get('/delete-page/:id', (req, res) =>  {
+  Page.findOneAndRemove({ _id: req.params.id }, (err) =>  {
+    if (err)  return console.log(err);
+    // For some reason, this message does not appear
+    req.flash('success', 'Page deleted!');
+    res.redirect('/admin/pages/');
+  });
 });
 
 // Exports
