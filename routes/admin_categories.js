@@ -1,3 +1,11 @@
+/*  This file is for admin section, so it should only be visible to
+*   admins, not customers, regarding category management.
+*
+*  NOTE:
+*  req.flash isn't working properly (a bug that will take awhile to figure out)
+*  Everything is working even if it doesn't seem like it
+*  Sachin 5/2/20
+*/
 var express = require('express');
 var router = express.Router();
 
