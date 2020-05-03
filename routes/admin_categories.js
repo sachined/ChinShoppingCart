@@ -69,71 +69,66 @@ router.post('/add-category', (req, res) => {
 });
 
 /*
-* GET edit category
-*/
+ * GET edit category
+ */
 router.get('/edit-category/:id', (req, res) => {
 
-    Category.findById(ObjectID(req.params.id).str, (err, category) =>  {
-        if (err)  return console.log(err);
+    Category.findById(req.params.id, function (err, category) {
+        if (err)
+            return console.log(err);
 
         res.render('admin/edit_category', {
             title: category.title,
             id: category._id
         });
     });
+
 });
 
+
 /*
-* POST edit page
+* POST edit category
 */
-router.post('/edit-page/:slug', (req, res) => {
+router.post('/edit-category/:id', (req, res) => {
 
   req.checkBody('title', 'Title must have a value.').notEmpty();
-  req.checkBody('content', 'Content must have a value.').notEmpty();
 
   var title = req.body.title;
-  var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
-  if(slug == "")  slug = title.replace(/\s+/g, '-').toLowerCase();
-  var content = req.body.content;
-  var id = req.body.id;
+  var slug = title.replace(/\s+/g, '-').toLowerCase();
+  var id = req.params.id;
 
   var errors = req.validationErrors();
 
   if (errors) {
     console.log('errors');
-    res.render('admin/edit_page', {
+    res.render('admin/edit_category', {
       errors: errors,
       title: title,
-      slug: slug,
-      content: content,
       id: id
     });
 
   } else {
-      Page.findOne({ slug: slug, _id: {'$ne': id}}, (err, page) => {
-          if (page) {
+      Category.findOne({ slug: slug, _id: {'$ne': id}}, (err, category) => {
+          if (category) {
               // For some reason, this message does not appear
               // Included connect-flash-plus, but nothing...
-              req.flash('danger', 'Page slug exists, choose another.');
-              res.render('admin/edit_page', {
+              req.flash('danger', 'Category title exists, choose another.');
+              res.render('admin/edit_category', {
                   title: title,
-                  slug: slug,
-                  content: content,
                   id: id
               });
           } else {
-              Page.findById(id, (err, page) =>  {
+              Category.findById(id, (err, category) =>  {
                   if (err)  return console.log(err);
 
-                  page.title = title;
-                  page.slug = slug;
-                  page.content = content;
+                  category.title = title;
+                  category.slug = slug;
 
-                page.save((err) =>  {
+                category.save((err) =>  {
                     if (err)  return console.log(err);
 
-                    req.flash('success', 'Page added!');
-                    res.redirect('/admin/pages/edit-page/'+page.slug);
+                    req.flash('success', 'Category edited!');
+                    res.redirect('/admin/categories/edit-category/'+ id);
                 });
               });
             }
@@ -152,6 +147,7 @@ router.get('/delete-page/:id', (req, res) =>  {
     res.redirect('/admin/pages/');
   });
 });
+
 
 // Exports
 module.exports = router;

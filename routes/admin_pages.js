@@ -187,7 +187,7 @@ router.post('/edit-page/:slug', (req, res) => {
                 page.save((err) =>  {
                     if (err)  return console.log(err);
                     // For some reason, this message does not appear
-                    req.flash('success', 'Page added!');
+                    req.flash('success', 'Page Edited!');
                     res.redirect('/admin/pages/edit-page/'+page.slug);
                 });
               });
