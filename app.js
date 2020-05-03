@@ -15,7 +15,7 @@ dotenv.config();
 // process.env.MONGO_DB can be replaced with a string if not using dotenv
 mongoose.connect(
     process.env.MONGO_DB,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
     () => console.log('Connected to MongoDB!')
 );
 
