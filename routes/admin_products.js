@@ -32,23 +32,27 @@ router.get('/', (req, res) =>  {
         res.render('admin/products', {
           products: products,
           count: count
-        })
-    })
+        });
+    });
 });
 
 /*
-* GET add page
+* GET add product
 */
-router.get('/add-page', (req, res) => {
-  var title = "";
-  var slug = "";
-  var content = "";
+router.get('/add-product', (req, res) => {
+    var title = "";
+    var desc = "";
+    var price = "";
 
-  res.render('admin/add_page', {
-    title: title,
-    slug: slug,
-    content: content
-  });
+    Category.find((err, categories) =>  {
+        res.render('admin/add_product', {
+            title: title,
+            desc: desc,
+            categories: categories,
+            price: price
+        });
+    });
+
 });
 
 /*
@@ -56,52 +60,52 @@ router.get('/add-page', (req, res) => {
 */
 router.post('/add-page', (req, res) => {
 
-  req.checkBody('title', 'Title must have a value.').notEmpty();
-  req.checkBody('content', 'Content must have a value.').notEmpty();
+    req.checkBody('title', 'Title must have a value.').notEmpty();
+    req.checkBody('content', 'Content must have a value.').notEmpty();
 
-  var title = req.body.title;
-  var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
-  if(slug == "")  slug = title.replace(/\s+/g, '-').toLowerCase();
-  var content = req.body.content;
+    var title = req.body.title;
+    var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
+    if(slug == "")  slug = title.replace(/\s+/g, '-').toLowerCase();
+    var content = req.body.content;
 
-  var errors = req.validationErrors();
+    var errors = req.validationErrors();
 
-  if (errors) {
-    console.log('errors');
-    res.render('admin/add_page', {
-      errors: errors,
-      title: title,
-      slug: slug,
-      content: content
-    });
+    if (errors) {
+        console.log('errors');
+        res.render('admin/add_page', {
+          errors: errors,
+          title: title,
+          slug: slug,
+          content: content
+        });
 
-  } else {
-    Page.findOne({ slug: slug}, (err, page) => {
-        if (page) {
-          // This statement doesn't work or is not showing up when I tried to put an existing slug
-          req.flash('danger', 'Page slug exists, choose another.');
-          res.render('admin/add_page', {
-            title: title,
-            slug: slug,
-            content: content
-          });
-        } else {
-            var page = new Page({
-              title: title,
-              slug: slug,
-              content: content,
-              sorting: 100
-            });
+    } else {
+        Page.findOne({ slug: slug}, (err, page) => {
+            if (page) {
+                // This statement doesn't work or is not showing up when I tried to put an existing slug
+                req.flash('danger', 'Page slug exists, choose another.');
+                res.render('admin/add_page', {
+                    title: title,
+                    slug: slug,
+                    content: content
+                });
+            } else {
+                var page = new Page({
+                  title: title,
+                  slug: slug,
+                  content: content,
+                  sorting: 100
+                });
 
-            page.save((err) =>  {
-              if (err)  return console.log(err);
-              // This doesn't work when page is added...but the page is added...
-              req.flash('success', 'Page added!');
-              res.redirect('/admin/pages');
-            });
-        }
-    });
-  }
+                page.save((err) =>  {
+                  if (err)  return console.log(err);
+                  // This doesn't work when page is added...but the page is added...
+                  req.flash('success', 'Page added!');
+                  res.redirect('/admin/pages');
+                });
+            }
+        });
+    }
 });
 
 /*
