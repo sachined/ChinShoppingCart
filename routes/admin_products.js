@@ -128,7 +128,7 @@ router.post('/add-product', function (req, res) {
 
                   mkdirp('public/product_images/'+ product._id + '/gallery/thumbs', (err)  =>  {
                       return console.log(err);
-                  });*/
+                  });
 
                   if (imageFile != "") {
                       var productImage = req.files.image;
@@ -137,7 +137,7 @@ router.post('/add-product', function (req, res) {
                       productImage.mv(path, (err) =>  {
                           return console.log(err);
                       });
-                  }
+                  }*/
 
                   // This doesn't work when page is added...but the page is added...
                   req.flash('success', 'Product added!');
