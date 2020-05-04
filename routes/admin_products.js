@@ -118,7 +118,7 @@ router.post('/add-product', function (req, res) {
                 product.save((err) =>  {
                   if (err)  return console.log(err);
 
-                  mkdirp('public/product_images/'+ product._id, (err)  =>  {
+                /*  mkdirp('public/product_images/'+ product._id, (err)  =>  {
                       return console.log(err);
                   });
 
@@ -128,7 +128,7 @@ router.post('/add-product', function (req, res) {
 
                   mkdirp('public/product_images/'+ product._id + '/gallery/thumbs', (err)  =>  {
                       return console.log(err);
-                  });
+                  });*/
 
                   if (imageFile != "") {
                       var productImage = req.files.image;
