@@ -58,7 +58,7 @@ router.get('/add-product', (req, res) => {
 /*
 * POST add product
 */
-router.post('/add-product', function (req, res) {
+/*router.post('/add-product', function (req, res) {
 
     var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
 
@@ -142,7 +142,7 @@ router.post('/add-product', function (req, res) {
             }
         });
     }
-});
+});*/
 
 /*
 * POST reorder-pages
