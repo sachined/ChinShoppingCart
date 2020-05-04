@@ -60,7 +60,11 @@ router.get('/add-product', (req, res) => {
 */
 router.post('/add-product', function (req, res) {
 
-    var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
+    let imageFile; //
+    if(!req.files)  imageFile="";
+    else {
+      imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
+    }
 
     req.checkBody('title', 'Title must have a value.').notEmpty();
     req.checkBody('desc', 'Description must have a value.').notEmpty();
@@ -126,7 +130,7 @@ router.post('/add-product', function (req, res) {
                       return console.log(err);
                   });
 
-                  if (imageFile !== "") {
+                  if (imageFile != "") {
                       var productImage = req.files.image;
                       var path = 'public/product_images/' + product._id + '/' + imageFile;
 
