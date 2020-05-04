@@ -65,8 +65,7 @@ router.post('/add-product', function (req, res) {
     req.checkBody('title', 'Title must have a value.').notEmpty();
     req.checkBody('desc', 'Description must have a value.').notEmpty();
     req.checkBody('price', 'Price must have a value.').isDecimal();
-    //req.checkBody('image', 'You must upload an image!').isImage(imageFile);
-
+    req.checkBody('image', 'You must upload an image!').isImage(imageFile);
 
     var title = req.body.title;
     var slug = title.replace(/\s+/g, '-').toLowerCase();
@@ -79,6 +78,7 @@ router.post('/add-product', function (req, res) {
     if (errors) {
         Category.find((err, categories) =>  {
             res.render('admin/add_product', {
+                errors: errors,
                 title: title,
                 desc: desc,
                 categories: categories,
@@ -92,7 +92,6 @@ router.post('/add-product', function (req, res) {
                 req.flash('danger', 'Product title exists, choose another.');
                 Category.find((err, categories) =>  {
                     res.render('admin/add_product', {
-                        errors: errors,
                         title: title,
                         desc: desc,
                         categories: categories,
@@ -102,6 +101,7 @@ router.post('/add-product', function (req, res) {
             } else {
 
                 var price2 = parseFloat(price).toFixed(2);
+
                 var product = new Product({
                   title: title,
                   slug: slug,

@@ -8,7 +8,7 @@ var expressValidator = require('express-validator');
 var fileUpload = require('express-fileupload');
 
 // This statement might be redundant, but kept in case
-var flash = require('connect-flash-plus');
+//var flash = require('connect-flash-plus');
 // Enables usage of environmental variables
 dotenv.config();
 
@@ -53,7 +53,7 @@ app.use(session({
 
 // This might be extra, but leave it in unless it becomes redundant
 // Connect-flash-plus middleware
-app.use(flash());
+//app.use(flash());
 
 // Express Validator middleware
 app.use(expressValidator({
