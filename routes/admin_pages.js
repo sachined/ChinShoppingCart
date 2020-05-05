@@ -82,6 +82,14 @@ router.post('/add-page', (req, res) => {
 
             page.save((err) =>  {
               if (err)  return console.log(err);
+
+              Page.find({}).sort({sorting: 1}).exec((err, pages) => {
+                  if (err)  console.log(err);
+                  else {
+                    req.app.locals.pages = pages;
+                  }
+              });
+
               // This doesn't work when page is added...but the page is added...
               req.flash('success', 'Page added!');
               res.redirect('/admin/pages');
@@ -91,33 +99,52 @@ router.post('/add-page', (req, res) => {
   }
 });
 
+// Sort pages Function
+function sortPages(ids, callback)   {
+  var count = 0;
+
+  for (var i = 0; i < ids.length; i++)  {
+    var id = ids[i];
+    count++;
+
+    // Because nodeJS is asynchrous, the following function will enable
+    // actual sorting and keeps the order even after refreshing
+
+    ((count) => {
+    Page.findById(id, (err, page) =>  {
+        page.sorting = count;
+        page.save((err) =>  {
+          if(err) return console.log(err);
+          ++count;
+          if (count >= ids.length)  {
+              callback();
+          }
+        });
+    });
+    // Random note, synchronous (like PHP or C#) will recognize the above function
+    // and allow actual sorting
+    })(count);
+    // Function within a function allows actual sorting (nodeJS)
+  }
+
+}
+
+
+
 /*
 * POST reorder-pages
 */
 router.post('/reorder-pages', (req, res) =>  {
     var ids = req.body['id[]'];
 
-    var count = 0;
-
-    for (var i = 0; i < ids.length; i++)  {
-      var id = ids[i];
-      count++;
-
-      // Because nodeJS is asynchrous, the following function will enable
-      // actual sorting and keeps the order even after refreshing
-
-      ((count) => {
-      Page.findById(id, (err, page) =>  {
-          page.sorting = count;
-          page.save((err) =>  {
-            if(err) return console.log(err);
-          });
+    sortPages(ids, () =>  {
+      Page.find({}).sort({sorting: 1}).exec((err, pages) => {
+          if (err)  console.log(err);
+          else {
+            req.app.locals.pages = pages;
+          }
       });
-      // Random note, synchronous (like PHP or C#) will recognize the above function
-      // and allow actual sorting
-      })(count);
-      // Function within a function allows actual sorting (nodeJS)
-    }
+    });
 });
 
 /*
@@ -186,6 +213,14 @@ router.post('/edit-page/:id', (req, res) => {
 
                 page.save((err) =>  {
                     if (err)  return console.log(err);
+
+                    Page.find({}).sort({sorting: 1}).exec((err, pages) => {
+                        if (err)  console.log(err);
+                        else {
+                          req.app.locals.pages = pages;
+                        }
+                    });
+                    
                     // For some reason, this message does not appear
                     req.flash('success', 'Page Edited!');
                     res.redirect('/admin/pages/edit-page/'+ id);
@@ -202,6 +237,13 @@ router.post('/edit-page/:id', (req, res) => {
 router.get('/delete-page/:id', (req, res) =>  {
   Page.findOneAndRemove({ _id: req.params.id }, (err) =>  {
     if (err)  return console.log(err);
+
+    Page.find({}).sort({sorting: 1}).exec((err, pages) => {
+        if (err)  console.log(err);
+        else {
+          req.app.locals.pages = pages;
+        }
+    });
     // For some reason, this message does not appear
     req.flash('success', 'Page deleted!');
     res.redirect('/admin/pages/');
