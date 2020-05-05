@@ -260,18 +260,36 @@ router.post('/edit-product/:id', (req, res) => {
                                 return console.log(err);
                             });
                         }
-
                         // This doesn't work when page is added...but the page is added...
                         req.flash('success', 'Product edited!');
                         res.redirect('/admin/products/edit-product/' + id);
-
                     });
                 });
             }
         });
     }
+});
 
+/*
+* POST product gallery
+*/
+router.post('/product-gallery/:id', (req, res) =>  {
 
+    var productImage = req.files.file;
+    var id = req.params.id;
+    var path = 'public/product_images/' + id + '/gallery/' + req.files.file.name;
+    var thumbsPath = 'public/product_images/' + id + '/gallery/thumbs/' + req.files.file.name;
+
+    productImage.mv(path, (err) => {
+        if (err)  console.log(err);
+
+        resizeImg(fs.readFileSync(path), {width: 100, height: 100}).then((buf)  =>  {
+            fs.writeFileSync(thumbsPath, buf);
+        });
+
+    });
+
+    res.sendStatus(200);
 
 });
 
