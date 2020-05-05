@@ -40,7 +40,8 @@
 
   $('tbody').sortable({
 
-    items: "tr:not('.home')",
+    //items: "tr:not('.home')",
+    item: "tr",
     placeholder: "ui-state-hightlight",
     update: function () {
         var ids = $('tbody').sortable("serialize");
