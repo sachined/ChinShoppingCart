@@ -8,15 +8,7 @@
   border: 1px dashed #ccc;
 }
 
-#imgPreview {
-    margin: 20px;
-}
-
-#noimage {
-  width: 100px;
-  height: 100px;
-}
-
+/* This will style the Submit button to have it pop out */
 .btn.btn-default {
   border-radius: 5px;
   border: 2px solid black;
@@ -25,4 +17,29 @@
   padding: 14px 28px;
   font-size: 16px;
   cursor: pointer;
+}
+
+/* When submitting an image for a product, this will keep the preview pane small */
+#imgPreview {
+    margin: 20px;
+}
+
+/* When looking at products, their images will be kept in a constant size */
+#noimage {
+  width: 100px;
+  height: 100px;
+}
+
+ul.gallery  {
+    padding: 0;
+}
+
+ul.gallery li:first-child {
+    margin-left: 0;
+}
+
+ul.gallery li {
+    margin: 20px;
+    display: inline-block;
+    list-style: none;
 }

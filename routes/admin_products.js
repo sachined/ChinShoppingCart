@@ -294,15 +294,49 @@ router.post('/product-gallery/:id', (req, res) =>  {
 });
 
 /*
-* GET delete page
+* GET delete image
 */
-router.get('/delete-page/:id', (req, res) =>  {
-  Page.findOneAndRemove({ _id: req.params.id }, (err) =>  {
-    if (err)  return console.log(err);
-    // For some reason, this message does not appear
-    req.flash('success', 'Page deleted!');
-    res.redirect('/admin/pages/');
+router.get('/delete-image/:image', (req, res) =>  {
+
+  var originalImage = 'public/product_images/' + req.query.id + '/gallery/' + req.params.image;
+  var thumbImage = 'public/product_images/' + req.query.id + '/gallery/thumbs/' + req.params.image;
+
+  fs.remove(originalImage, (err)  =>  {
+      if (err) console.log(err);
+      else {
+          fs.remove(thumbImage, (err) =>  {
+              if (err)  console.log(err);
+              else {
+                req.flash('success', 'Image deleted!');
+                res.redirect('/admin/products/edit-product/' + req.query.id);
+              }
+          });
+
+      }
+
+
   });
+
+});
+
+/*
+* GET delete product
+*/
+router.get('/delete-product/:id', (req, res) =>  {
+  var id = req.params.id;
+  var path = 'public/product_images/' + id;
+
+  fs.remove(path, (err) =>  {
+      if (err)  console.log(err);
+      else {
+          Product.findByIdAndRemove(id, (err) =>  {
+              console.log(err);
+          });
+
+          req.flash('success', 'Product deleted!');
+          res.redirect('/admin/products');
+      }
+  })
 });
 
 // Exports
