@@ -1,9 +1,5 @@
-/* This will turn the cursor into a pointer when sorting tabs in admin
+/* This will turn the cursor into a pointer when sorting tabs in admin*/
 .sorting tr:not(.home)  {
-  cursor: pointer;
-}*/
-
-.sorting tr {
   cursor: pointer;
 }
 
