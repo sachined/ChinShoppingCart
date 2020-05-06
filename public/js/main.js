@@ -13,5 +13,10 @@ $(function()  {
       if (!confirm('Confirm deletion ')) return false;
   });
 
+  // Activate the fancybox plugin to view gallery images for each product
+  if ($("[data-fancybox]").length)  {
+      $("[data-fancybox]").fancybox();
+  }
+
 
 });

@@ -5,5 +5,38 @@ a#spaced-out  {
   color: white;
   padding: 14px 28px;
   font-size: 16px;
-  cursor: pointer;  
+  cursor: pointer;
+}
+
+img.pimage {
+    width: 150px;
+    height: inherit;
+}
+
+a.pa  {
+    display: inline-block;
+    height: 160px;
+}
+
+.row.products .p {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+img.spi {
+    width: 100%;
+}
+
+ul.gallery li {
+    display: inline-block;
+    margin: 20px;
+    list-style: none;
+}
+
+img.cpi {
+    width: 100px;
+}
+
+table.alignmiddle td {
+    vertical-align: middle !important;
 }

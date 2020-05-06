@@ -1,6 +1,6 @@
 /* This is what the customers will see (non-admin zone)
 *
-* Think storefront and aisles of a store
+* Think storefront' various aspects
 *
 */
 var express = require('express');
