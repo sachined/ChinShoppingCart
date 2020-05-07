@@ -7,6 +7,7 @@ var session = require('express-session');
 var expressValidator = require('express-validator');
 var fileUpload = require('express-fileupload');
 var flash = require('connect-flash');
+var passport = require('passport');
 
 // Enables usage of environmental variables
 dotenv.config();
@@ -114,6 +115,12 @@ app.use(function (req, res, next) {
     res.locals.messages = require('express-messages')(req, res);
     next();
 });
+
+// Passport Config
+require('./config/passport')(passport);
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // This will enable the cart usage
 app.get('*', function (req, res, next)  {

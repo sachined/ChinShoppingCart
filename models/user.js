@@ -6,23 +6,28 @@ var mongoose = require('mongoose');
 *     Services (services) -> Describe the services that this store/business offers
 *     Contact Us (contact-us) -> How people can contanct you about any issues or products
 */
-// Page Schema
-var PageSchema = mongoose.Schema({
+// User Schema
+var UserSchema = mongoose.Schema({
 
-  title: {
+  name: {
     type: String,
     required: true
   },
-  slug: {
-    type: String
-  },
-  content: {
+  email: {
     type: String,
     required: true
   },
-  sorting: {
+  username: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  admin: {
     type: Number
   }
 });
 
-var Page = module.exports = mongoose.model('Page', PageSchema);
+var User = module.exports = mongoose.model('User', UserSchema);
