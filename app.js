@@ -6,9 +6,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var expressValidator = require('express-validator');
 var fileUpload = require('express-fileupload');
+var flash = require('connect-flash');
 
-// This statement might be redundant, but kept in case
-//var flash = require('connect-flash-plus');
 // Enables usage of environmental variables
 dotenv.config();
 
@@ -55,8 +54,6 @@ Category.find((err, categories) => {
     }
 });
 
-
-
 // Express fileUpload middleware
 app.use(fileUpload());
 
@@ -74,10 +71,6 @@ app.use(session({
   saveUninitialized: true
   // cookie: { secure: true }
 }));
-
-// This might be extra, but leave it in unless it becomes redundant
-// Connect-flash-plus middleware
-//app.use(flash());
 
 // Express Validator middleware
 app.use(expressValidator({
@@ -115,8 +108,7 @@ app.use(expressValidator({
 }));
 
 // Express Messages middleware
-app.use(require('connect-flash')());
-
+app.use(flash());
 // This will show messages
 app.use(function (req, res, next) {
     res.locals.messages = require('express-messages')(req, res);

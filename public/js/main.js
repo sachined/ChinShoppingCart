@@ -9,7 +9,7 @@ $(function()  {
   }
 
   // This script will show a dialog box when deleting a page
-  $('a.confirmDeletion').on('click', (e)  =>  {
+  $('a.confirmDeletion').on('click', ()  =>  {
       if (!confirm('Confirm deletion ')) return false;
   });
 
