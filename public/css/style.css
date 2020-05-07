@@ -40,3 +40,37 @@ img.cpi {
 table.alignmiddle td {
     vertical-align: middle !important;
 }
+
+a.rightside {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  background-color: red;
+  color: yellow;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.pp {
+    position: absolute;
+    left: -3000px;
+}
+
+.ajaxbg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 2;
+    display: none;
+}
+
+.ajaxinner  {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}

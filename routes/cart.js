@@ -119,5 +119,17 @@ router.get('/clear', (req, res) =>  {
 
 });
 
+/*
+* GET buy now
+*/
+router.get('/buynow', (req, res) =>  {
+
+    delete req.session.cart;
+
+    res.sendStatus(200);
+
+});
+
+
 // Exports
 module.exports = router;

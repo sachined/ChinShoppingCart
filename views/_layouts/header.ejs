@@ -18,6 +18,12 @@
 
   </head>
   <body>
+    <div class="ajaxbg">
+        <div class="ajaxinner">
+            <h3>You are now being redirected to Paypal...</h3>
+            <img src="/images/ajax-loader.gif" alt=""/>
+        </div>
+    </div>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
                 <div class="navbar-header">
@@ -45,7 +51,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                          <a href="/cart/checkout">My Cart  (
+                          <a class="rightside" href="/cart/checkout">My Cart  (
                             <% if (typeof cart !== "undefined") { %>
                             <%= cart.length %>
                             <%  } else  { %>
