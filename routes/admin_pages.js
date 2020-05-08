@@ -8,6 +8,8 @@
 */
 var express = require('express');
 var router = express.Router();
+var auth = require('../config/auth');
+var isAdmin = auth.isAdmin;
 
 // Get Page model
 var Page = require('../models/page');
@@ -15,7 +17,7 @@ var Page = require('../models/page');
 /*
 * GET pages index
 */
-router.get('/', (req, res) =>  {
+router.get('/', isAdmin, (req, res) =>  {
   Page.find({}).sort({sorting: 1}).exec((err, pages) => {
       res.render('admin/pages', {
         pages: pages
@@ -26,7 +28,7 @@ router.get('/', (req, res) =>  {
 /*
 * GET add page
 */
-router.get('/add-page', (req, res) => {
+router.get('/add-page', isAdmin, (req, res) => {
   var title = "";
   var slug = "";
   var content = "";
@@ -129,8 +131,6 @@ function sortPages(ids, callback)   {
 
 }
 
-
-
 /*
 * POST reorder-pages
 */
@@ -150,7 +150,7 @@ router.post('/reorder-pages', (req, res) =>  {
 /*
 * GET edit page
 */
-router.get('/edit-page/:id', (req, res) => {
+router.get('/edit-page/:id', isAdmin, (req, res) => {
 
     Page.findById(req.params.id, (err, page) =>  {
         if (err)  return console.log(err);
@@ -220,7 +220,7 @@ router.post('/edit-page/:id', (req, res) => {
                           req.app.locals.pages = pages;
                         }
                     });
-                    
+
                     // For some reason, this message does not appear
                     req.flash('success', 'Page Edited!');
                     res.redirect('/admin/pages/edit-page/'+ id);
@@ -234,7 +234,7 @@ router.post('/edit-page/:id', (req, res) => {
 /*
 * GET delete page
 */
-router.get('/delete-page/:id', (req, res) =>  {
+router.get('/delete-page/:id', isAdmin, (req, res) =>  {
   Page.findOneAndRemove({ _id: req.params.id }, (err) =>  {
     if (err)  return console.log(err);
 

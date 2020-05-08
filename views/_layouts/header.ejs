@@ -44,14 +44,14 @@
                         </li>
                         <%  } else  { %>
                         <li>
-                          <a id="spaced-out" href="<%=  page.slug %>"><%= page.title %></a>
+                          <a id="spaced-out" href="/<%=  page.slug %>"><%= page.title %></a>
                         </li>
                         <%  }  %>
                         <%  }); %>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                          <a class="rightside" href="/cart/checkout">My Cart  (
+                          <a class="leftside" href="/cart/checkout">My Cart  (
                             <% if (typeof cart !== "undefined") { %>
                             <%= cart.length %>
                             <%  } else  { %>
@@ -59,6 +59,15 @@
                             <%  } %>
                           )</a>
                         </li>
+                        <% if (user ) {  %>
+                          <li><a class="rightside" href="/users/logout">Hi, <%= user.username %> ( logout )</a></li>
+                        <%  } else { %>
+                        <li><a class="middleside" href="/users/register">Register</a></li>
+                        <li><a class="rightside" href="/users/login">Log in</a></li>
+                        <%  } %>
+                        <% if (user && user.admin == 1) {  %>
+                          <li><a class="rightside2" href="/admin/pages">Admin Area</a></li>
+                        <%  } %>
                     </ul>
                 </div> <!-- /.nav-collapse -->
             </div>
@@ -66,6 +75,14 @@
 
         <div class="container">
             <%- messages('messages', locals) %>
+
+            <% if (errors) {%>
+                <% errors.forEach((error) => { %>
+                    <div class="alert alert-danger">
+                      <%= error.msg %>
+                    </div>
+                <% });%>
+            <% }%>
 
             <div class="row">
                 <div class="col-xs-12 col-md-3">

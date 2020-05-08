@@ -1,7 +1,26 @@
 a#spaced-out  {
   border-radius: 5px;
   border: 2px solid black;
-  background-color: green;
+  background-color: #006100;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+li.list-group-item  {
+  background-color: #FFEBFF;
+}
+
+li.list-group-item > a  {
+  color: #004C9E;
+}
+
+/* This will style the Submit button to have it pop out */
+.btn.btn-default {
+  border-radius: 10px;
+  border: 2px solid black;
+  background-color: blue;
   color: white;
   padding: 14px 28px;
   font-size: 16px;
@@ -41,17 +60,57 @@ table.alignmiddle td {
     vertical-align: middle !important;
 }
 
+a.leftside {
+  position: inherit;
+  right: 25px;
+  top: 8px;
+  background-color: #FFFF80;
+  color: #800000;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  border-style: ridge;
+}
+
+a.middleside {
+  position: inherit;
+  right: 68px;
+  top: 8px;
+  background-color: #FFFF80;
+  color: #800000;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 a.rightside {
+  position: inherit;
+  right: 10px;
+  top: 8px;
+  background-color: #1C0B62;
+  color: #1BDA64;
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  border-style: outset;
+}
+
+a.rightside2 {
   position: absolute;
   right: 10px;
-  top: 5px;
-  background-color: red;
-  color: yellow;
-  padding: 12px 24px;
-  font-size: 16px;
+  top: 8px;
+  background-color: #FFFF80;
+  color: #800000;
+  padding: 8px 12px;
+  font-size: 12px;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 5px;
+  border-style: dotted;
 }
+
 
 .pp {
     position: absolute;
@@ -73,4 +132,10 @@ a.rightside {
     top: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
