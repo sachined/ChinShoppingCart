@@ -87,8 +87,6 @@ a.middleside {
 
 a.rightside {
   position: inherit;
-  right: 10px;
-  top: 8px;
   background-color: #1C0B62;
   color: #1BDA64;
   padding: 8px 12px;

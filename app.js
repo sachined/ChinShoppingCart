@@ -69,7 +69,7 @@ app.use(bodyParser.json());
 // Express Session middleware
 // Edit : cookie-session is used in place of express session
 app.use(session({
-  secret: 'keyboard cat',
+  keys: ['keyboard cat'],
   resave: true,
   saveUninitialized: true,
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
