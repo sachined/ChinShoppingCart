@@ -3,7 +3,8 @@ var path = require('path')
 const dotenv = require('dotenv');
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser');
-var session = require('express-session');
+//var session = require('express-session');
+var session = require('cookie-session');
 var expressValidator = require('express-validator');
 var fileUpload = require('express-fileupload');
 var flash = require('connect-flash');
@@ -66,10 +67,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Express Session middleware
+// Edit : cookie-session is used in place of express session
 app.use(session({
   secret: 'keyboard cat',
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
   // cookie: { secure: true }
 }));
 
